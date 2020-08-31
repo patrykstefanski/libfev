@@ -1,0 +1,13 @@
+foreach(target echo echo-timeout)
+  add_executable(${target} ${target}.c)
+  target_link_libraries(${target} PRIVATE fev)
+  set_property(TARGET ${target} PROPERTY C_STANDARD 11)
+  fev_set_compile_options(${target})
+endforeach()
+
+foreach(target condition-variable++ connect++ echo++ echo-timeout++ fibonacci++ key-value++)
+  add_executable(${target} ${target}.cpp)
+  target_link_libraries(${target} PRIVATE fev)
+  set_property(TARGET ${target} PROPERTY CXX_STANDARD 17)
+  fev_set_compile_options(${target})
+endforeach()

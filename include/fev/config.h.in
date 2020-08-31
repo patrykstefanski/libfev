@@ -1,0 +1,129 @@
+/*
+ * Copyright 2020 Patryk Stefanski
+ *
+ * Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
+ * http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
+ * http://opensource.org/licenses/MIT>, at your option. This file may not be
+ * copied, modified, or distributed except according to those terms.
+ */
+
+#ifndef FEV_CONFIG_H
+#define FEV_CONFIG_H
+
+/* Version */
+
+#define FEV_VERSION_MAJOR @FEV_VERSION_MAJOR@
+#define FEV_VERSION_MINOR @FEV_VERSION_MINOR@
+#define FEV_VERSION_PATCH @FEV_VERSION_PATCH@
+
+/* Architecture */
+
+#cmakedefine FEV_ARCH_I386
+#cmakedefine FEV_ARCH_X86_64
+
+/* Compiler */
+
+#cmakedefine FEV_COMPILER_CLANG
+#cmakedefine FEV_COMPILER_GCC
+#cmakedefine FEV_COMPILER_MSVC
+
+/* OS */
+
+#cmakedefine FEV_OS_MACOS
+#cmakedefine FEV_OS_DARWIN
+
+#cmakedefine FEV_OS_LINUX
+
+#cmakedefine FEV_OS_DRAGONFLYBSD
+#cmakedefine FEV_OS_FREEBSD
+#cmakedefine FEV_OS_NETBSD
+#cmakedefine FEV_OS_OPENBSD
+
+#cmakedefine FEV_OS_WIN
+
+#cmakedefine FEV_OS_BSD
+#cmakedefine FEV_OS_POSIX
+
+/* Functions */
+
+#cmakedefine FEV_HAVE_ACCEPT4
+
+/* Page and cache sizes */
+
+#define FEV_PAGE_SIZE @FEV_PAGE_SIZE@
+#define FEV_DCACHE_LINE_SIZE @FEV_DCACHE_LINE_SIZE@
+#define FEV_ICACHE_LINE_SIZE @FEV_ICACHE_LINE_SIZE@
+
+/* Fiber's stack */
+
+#define FEV_DEFAULT_STACK_SIZE @FEV_DEFAULT_STACK_SIZE@
+#define FEV_DEFAULT_GUARD_SIZE @FEV_DEFAULT_GUARD_SIZE@
+
+/* Scheduler */
+
+#cmakedefine FEV_SCHED_WORK_SHARING_LOCKING
+#cmakedefine FEV_SCHED_WORK_SHARING_BOUNDED_MPMC
+#cmakedefine FEV_SCHED_WORK_SHARING_SIMPLE_MPMC
+#cmakedefine FEV_SCHED_WORK_STEALING_LOCKING
+#cmakedefine FEV_SCHED_WORK_STEALING_BOUNDED_MPMC
+#cmakedefine FEV_SCHED_WORK_STEALING_BOUNDED_SPMC
+
+#define FEV_SCHED_SHR_BOUNDED_MPMC_QUEUE_CAPACITY @FEV_SCHED_SHR_BOUNDED_MPMC_QUEUE_CAPACITY@
+
+#define FEV_SCHED_SHR_SIMPLE_MPMC_LOCAL_POOL_SIZE @FEV_SCHED_SHR_SIMPLE_MPMC_LOCAL_POOL_SIZE@
+
+#cmakedefine FEV_SCHED_STEAL_LOCKING_LOCK_MUTEX
+#cmakedefine FEV_SCHED_STEAL_LOCKING_LOCK_SPINLOCK
+#define FEV_SCHED_STEAL_LOCKING_STEAL_COUNT @FEV_SCHED_STEAL_LOCKING_STEAL_COUNT@
+
+#define FEV_SCHED_STEAL_BOUNDED_MPMC_QUEUE_CAPACITY @FEV_SCHED_STEAL_BOUNDED_MPMC_QUEUE_CAPACITY@
+#define FEV_SCHED_STEAL_BOUNDED_MPMC_STEAL_COUNT @FEV_SCHED_STEAL_BOUNDED_MPMC_STEAL_COUNT@
+
+#define FEV_SCHED_STEAL_BOUNDED_SPMC_QUEUE_CAPACITY @FEV_SCHED_STEAL_BOUNDED_SPMC_QUEUE_CAPACITY@
+#define FEV_SCHED_STEAL_BOUNDED_SPMC_STEAL_COUNT @FEV_SCHED_STEAL_BOUNDED_SPMC_STEAL_COUNT@
+
+/* Poller */
+
+#cmakedefine FEV_POLLER_EPOLL
+#cmakedefine FEV_POLLER_IO_URING
+#cmakedefine FEV_POLLER_KQUEUE
+
+#define FEV_IO_URING_ENTRIES_PER_WORKER @FEV_IO_URING_ENTRIES_PER_WORKER@
+
+/* Timers */
+
+#cmakedefine FEV_TIMERS_BINHEAP
+#cmakedefine FEV_TIMERS_RBTREE
+
+#cmakedefine FEV_TIMERS_MIN_LOCK_MUTEX
+#cmakedefine FEV_TIMERS_MIN_LOCK_SPINLOCK
+
+/* Internal lock */
+
+#cmakedefine FEV_ILOCK_LOCK_MUTEX
+#cmakedefine FEV_ILOCK_LOCK_SPINLOCK
+
+/* Threads */
+
+#cmakedefine FEV_THR_POSIX
+#cmakedefine FEV_THR_WIN
+
+/* Thread mutex */
+
+#cmakedefine FEV_THR_MUTEX_LINUX
+#cmakedefine FEV_THR_MUTEX_POSIX
+#cmakedefine FEV_THR_MUTEX_WIN
+
+/* Thread semaphore */
+
+#cmakedefine FEV_THR_SEM_MACOS
+#cmakedefine FEV_THR_SEM_POSIX
+#cmakedefine FEV_THR_SEM_WIN
+
+/* Other */
+
+#cmakedefine FEV_ENABLE_DEBUG_ASSERT
+#cmakedefine FEV_ENABLE_ASAN
+#cmakedefine FEV_ASSUME_MALLOC_NEVER_FAILS
+
+#endif /* !FEV_CONFIG_H */
