@@ -314,6 +314,13 @@ configure_file(include/fev/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/include/fev/
 
 add_library(fev ${FEV_SOURCES})
 
+# ABI version
+set_target_properties(fev
+  PROPERTIES
+    VERSION ${FEV_VERSION_MAJOR}.${FEV_VERSION_MINOR}.${FEV_VERSION_PATCH}
+    SOVERSION ${FEV_VERSION_MAJOR}
+)
+
 target_include_directories(fev PUBLIC include)
 target_include_directories(fev PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/include")
 target_include_directories(fev PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/third_party")
