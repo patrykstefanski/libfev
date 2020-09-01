@@ -386,3 +386,18 @@ endif()
 if(FEV_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
+
+# Install
+
+include(GNUInstallDirs)
+
+install(TARGETS fev
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(FILES
+  "${CMAKE_SOURCE_DIR}/include/fev/fev.h"
+  "${CMAKE_SOURCE_DIR}/include/fev/fev++.hpp"
+  "${CMAKE_BINARY_DIR}/include/fev/config.h"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/fev"
+)
