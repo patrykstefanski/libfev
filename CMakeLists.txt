@@ -314,6 +314,13 @@ configure_file(include/fev/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/include/fev/
 
 add_library(fev ${FEV_SOURCES})
 
+# ABI version
+set_target_properties(fev
+  PROPERTIES
+    VERSION ${FEV_VERSION_MAJOR}.${FEV_VERSION_MINOR}.${FEV_VERSION_PATCH}
+    SOVERSION ${FEV_VERSION_MAJOR}
+)
+
 target_include_directories(fev PUBLIC include)
 target_include_directories(fev PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/include")
 target_include_directories(fev PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/third_party")
@@ -379,3 +386,30 @@ endif()
 if(FEV_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
+
+include(GNUInstallDirs)
+
+# pkg-config file
+
+configure_file(libfev.pc.in
+  "${CMAKE_BINARY_DIR}/libfev.pc"
+  @ONLY
+)
+
+# Install
+
+install(TARGETS fev
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(FILES
+  "${CMAKE_SOURCE_DIR}/include/fev/fev.h"
+  "${CMAKE_SOURCE_DIR}/include/fev/fev++.hpp"
+  "${CMAKE_BINARY_DIR}/include/fev/config.h"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/fev"
+)
+
+install(FILES
+  "${CMAKE_BINARY_DIR}/libfev.pc"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
+)
