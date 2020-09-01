@@ -387,6 +387,13 @@ if(FEV_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
+# pkg-config file
+
+configure_file(libfev.pc.in
+  "${CMAKE_BINARY_DIR}/libfev.pc"
+  @ONLY
+)
+
 # Install
 
 include(GNUInstallDirs)
@@ -400,4 +407,9 @@ install(FILES
   "${CMAKE_SOURCE_DIR}/include/fev/fev++.hpp"
   "${CMAKE_BINARY_DIR}/include/fev/config.h"
   DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/fev"
+)
+
+install(FILES
+  "${CMAKE_BINARY_DIR}/libfev.pc"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
 )
