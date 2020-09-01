@@ -387,6 +387,8 @@ if(FEV_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
+include(GNUInstallDirs)
+
 # pkg-config file
 
 configure_file(libfev.pc.in
@@ -395,8 +397,6 @@ configure_file(libfev.pc.in
 )
 
 # Install
-
-include(GNUInstallDirs)
 
 install(TARGETS fev
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
