@@ -31,14 +31,14 @@ fev_context_switch:
 #endif
 
 #ifdef FEV_ENABLE_ASAN
-	pushq %rdi
-	pushq %rsi
-	leaq 64(%rdi), %rdi /* &from->fake_stack */
-	movq 80(%rsi), %rdx /* to->stack_size */
-	movq 72(%rsi), %rsi /* to->stack_bottom */
-	call __sanitizer_start_switch_fiber
-	popq %rsi
-	popq %rdi
+  pushq %rdi
+  pushq %rsi
+  leaq 64(%rdi), %rdi /* &from->fake_stack */
+  movq 80(%rsi), %rdx /* to->stack_size */
+  movq 72(%rsi), %rsi /* to->stack_bottom */
+  call __sanitizer_start_switch_fiber
+  popq %rsi
+  popq %rdi
 #endif
 
   stmxcsr (%rdi)
@@ -62,11 +62,11 @@ fev_context_switch:
   movq 56(%rsi), %r15
 
 #ifdef FEV_ENABLE_ASAN
-	movq %rdi, %rax
-	movq 64(%rsi), %rdi /* to->fake_stack */
-	leaq 72(%rax), %rsi /* &from->stack_bottom */
-	leaq 80(%rax), %rdx /* &from->stack_size */
-	call __sanitizer_finish_switch_fiber
+  movq %rdi, %rax
+  movq 64(%rsi), %rdi /* to->fake_stack */
+  leaq 72(%rax), %rsi /* &from->stack_bottom */
+  leaq 80(%rax), %rdx /* &from->stack_size */
+  call __sanitizer_finish_switch_fiber
 #endif
 
   ret
@@ -95,18 +95,18 @@ fev_context_switch_and_call:
 #endif
 
 #ifdef FEV_ENABLE_ASAN
-	pushq %rdi
-	pushq %rsi
-	pushq %rdx
-	pushq %rcx
-	leaq 64(%rdx), %rdi /* &from->fake_stack */
-	movq 72(%rcx), %rsi /* to->stack_bottom */
-	movq 80(%rcx), %rdx /* to->stack_size */
-	call __sanitizer_start_switch_fiber
-	popq %rcx
-	popq %rdx
-	popq %rsi
-	popq %rdi
+  pushq %rdi
+  pushq %rsi
+  pushq %rdx
+  pushq %rcx
+  leaq 64(%rdx), %rdi /* &from->fake_stack */
+  movq 72(%rcx), %rsi /* to->stack_bottom */
+  movq 80(%rcx), %rdx /* to->stack_size */
+  call __sanitizer_start_switch_fiber
+  popq %rcx
+  popq %rdx
+  popq %rsi
+  popq %rdi
 #endif
 
   stmxcsr (%rdx)
@@ -130,14 +130,14 @@ fev_context_switch_and_call:
   movq 56(%rcx), %r15
 
 #ifdef FEV_ENABLE_ASAN
-	pushq %rdi
-	pushq %rsi
-	movq 64(%rcx), %rdi /* to->fake_stack */
-	leaq 72(%rdx), %rsi /* &from->stack_bottom */
-	leaq 80(%rdx), %rdx /* &from->stack_size */
-	call __sanitizer_finish_switch_fiber
-	popq %rsi
-	popq %rdi
+  pushq %rdi
+  pushq %rsi
+  movq 64(%rcx), %rdi /* to->fake_stack */
+  leaq 72(%rdx), %rsi /* &from->stack_bottom */
+  leaq 80(%rdx), %rdx /* &from->stack_size */
+  call __sanitizer_finish_switch_fiber
+  popq %rsi
+  popq %rdi
 #endif
 
   jmp *%rsi
