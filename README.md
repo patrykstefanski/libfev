@@ -59,6 +59,10 @@ void acceptor() {
 
 See also [examples](examples).
 
+## Documentation
+
+* [Scheduler strategies](docs/SchedulerStrategies.md)
+
 ## License
 
 Licensed under either of
