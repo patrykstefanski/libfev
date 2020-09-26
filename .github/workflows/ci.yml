@@ -1,0 +1,36 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+          - ubuntu-20.04
+        sched:
+          - work-sharing-locking
+          - work-sharing-bounded-mpmc
+          - work-sharing-simple-mpmc
+          - work-stealing-locking
+          - work-stealing-bounded-mpmc
+          - work-stealing-bounded-spmc
+        timers:
+          - binheap
+          - rbtree
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DFEV_BUILD_EXAMPLES=On \
+            -DFEV_BUILD_TESTS=On \
+            -DFEV_SCHED=${{ matrix.sched }} \
+            -DFEV_TIMERS=${{ matrix.timers }}
+      - name: Build
+        run: cmake --build build --config Release --parallel
