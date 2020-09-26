@@ -2,6 +2,8 @@
 
 A library for events and fibers (a.k.a. green threads/goroutines/stackful coroutines).
 
+[![CI](https://github.com/patrykstefanski/libfev/workflows/CI/badge.svg)](https://github.com/patrykstefanski/libfev/actions)
+
 ## Overview
 
 libfev is an abstraction over event-driven, non-blocking I/O for writing programs in C and C++ in a
