@@ -19,7 +19,7 @@
 #include "fev_compiler.h"
 
 struct fev_qsbr_entry {
-  struct fev_qsbr_entry *next;
+  _Atomic(struct fev_qsbr_entry *) next;
 };
 
 struct fev_qsbr_global {
@@ -68,23 +68,24 @@ FEV_NONNULL(1, 2, 3)
 static inline void fev_qsbr_free(struct fev_qsbr_global *global, struct fev_qsbr_local *local,
                                  struct fev_qsbr_entry *entry)
 {
-  struct fev_qsbr_entry *expected = NULL;
+  struct fev_qsbr_entry *expected = NULL, *next;
   uint32_t epoch;
   bool exchanged;
 
   /* qsbr_free() is not supported when the number of threads is 1. */
   FEV_ASSERT(global->num_threads > 1);
 
-  entry->next = NULL;
+  atomic_store_explicit(&entry->next, NULL, memory_order_relaxed);
   exchanged = atomic_compare_exchange_strong_explicit(&global->to_free1, &expected, entry,
-                                                      memory_order_consume, memory_order_consume);
+                                                      memory_order_acq_rel, memory_order_consume);
   if (FEV_UNLIKELY(exchanged)) {
     epoch = atomic_load_explicit(&global->epoch, memory_order_relaxed);
     atomic_store_explicit(&global->num_remaining, global->num_threads - 1, memory_order_relaxed);
     atomic_store_explicit(&global->epoch, epoch + 1, memory_order_release);
     local->epoch = epoch + 1;
   } else {
-    entry->next = atomic_load_explicit(&global->to_free2, memory_order_relaxed);
+    next = atomic_load_explicit(&global->to_free2, memory_order_relaxed);
+    atomic_store_explicit(&entry->next, next, memory_order_relaxed);
     while (!atomic_compare_exchange_weak_explicit(&global->to_free2, &entry->next, entry,
                                                   memory_order_release, memory_order_relaxed))
       ;

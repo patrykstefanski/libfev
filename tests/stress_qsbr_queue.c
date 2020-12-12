@@ -39,7 +39,7 @@ static void free_qsbr_nodes(struct fev_qsbr_entry *head)
   struct fev_qsbr_entry *next;
 
   while (head != NULL) {
-    next = head->next;
+    next = atomic_load_explicit(&head->next, memory_order_relaxed);
     free_node(FEV_CONTAINER_OF(head, struct fev_qsbr_queue_node, qsbr_entry));
     head = next;
   }

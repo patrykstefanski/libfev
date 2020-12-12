@@ -60,7 +60,7 @@ static inline uint32_t fev_poller_free_socket_list(struct fev_qsbr_entry *cur)
   uint32_t n = 0;
 
   while (cur != NULL) {
-    struct fev_qsbr_entry *next = cur->next;
+    struct fev_qsbr_entry *next = atomic_load_explicit(&cur->next, memory_order_relaxed);
     struct fev_socket *socket = FEV_CONTAINER_OF(cur, struct fev_socket, qsbr_entry);
     fev_free(socket);
     cur = next;
