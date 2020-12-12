@@ -197,7 +197,7 @@ FEV_NONNULL(1) bool fev_mutex_try_lock(struct fev_mutex *mutex);
  * fev_mutex_try_lock_for() and fev_mutex_try_lock_until() return 0 if the mutex is acquired
  * successfully within the specified timeout. Otherwise, it returns a _negative_ error code:
  * -ETIMEDOUT - If the specified timeout has expired.
- * -ENOMEM    - Insufficient memory exists to perform the operation (only if PEV_TIMERS is set to
+ * -ENOMEM    - Insufficient memory exists to perform the operation (only if FEV_TIMERS is set to
  *              binheap).
  */
 
